@@ -1,37 +1,89 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet } from 'react-native';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
+import WelcomeScreen from '@/components/WelcomeScreen';
+import index from '@/app/(tabs)/index'
+import explore from '@/app/(tabs)/explore'
+import account from '@/app/(tabs)/account'
+import LoginScreen from '@/components/Login/LoginScreen';
+
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+const Stack = createStackNavigator();
+const Tabs = createBottomTabNavigator();
 
+const TabNavigator = () => {
+  const colorScheme = useColorScheme();
+  
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+    <Tabs.Navigator
+      tabBarOptions={{
+        activeTintColor: "#a37f4f",
+        style: styles.tabBarStyle,
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="Home"
+        component={index}
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={24} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="Explore"
+        component={explore}
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" color={color} size={24} />
           ),
         }}
       />
-    </Tabs>
+      <Tabs.Screen
+        name="Account"
+        component={account}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="people" color={color} size={24} />
+          ),
+        }}
+      />
+    </Tabs.Navigator>
+  );
+};
+
+export default function App() {
+  return (
+      <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Screen 
+          name="Welcome" 
+          component={WelcomeScreen} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="Home" 
+          component={TabNavigator} 
+          options={{ headerShown: false }} 
+        />
+      </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBarStyle: {
+    paddingBottom: 0,
+    height: 60, 
+  },
+});

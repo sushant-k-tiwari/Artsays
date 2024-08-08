@@ -29,9 +29,13 @@ const loadFonts = async () => {
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
-  const handleLogin = () =>{
+  const handleLogin = () => {
     navigation.navigate("Login");
-  }
+  };
+
+  const handleSignup = () => {
+    navigation.navigate("Signup");
+  };
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -61,7 +65,10 @@ const WelcomeScreen = () => {
         >
           <Text style={styles.loginButtonText}> Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.loginButtonWrapper]}>
+        <TouchableOpacity
+          style={[styles.loginButtonWrapper]}
+          onPress={handleSignup}
+        >
           <Text style={styles.signupButtonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>

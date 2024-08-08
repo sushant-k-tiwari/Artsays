@@ -8,9 +8,10 @@ import WelcomeScreen from '@/components/WelcomeScreen';
 import index from '@/app/(tabs)/index'
 import explore from '@/app/(tabs)/explore'
 import account from '@/app/(tabs)/account'
-import LoginScreen from '@/components/Login/LoginScreen';
+import LoginScreen from '@/components/Login-Signup/LoginScreen';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import SignupScreen from '@/components/Login-Signup/SignupScreen';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -70,6 +71,11 @@ export default function App() {
         <Stack.Screen 
           name="Login"
           component={LoginScreen}
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="Signup"
+          component={SignupScreen}
           options={{ headerShown: false }} 
         />
         <Stack.Screen 
